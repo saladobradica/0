@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sala Dobradiça Digital</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1100px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .botao {
+            display: block;
+
+            width: 100%;
+
+            padding: 22px 10px;
+            margin: 24px 0;
+
+            color: #fff;
+            text-decoration: none;
+
+            font-size: clamp(22px, 2.4vw, 34px);
+            font-weight: bold;
+
+            transition: opacity .2s ease;
+        }
+
+        .botao:hover {
+            opacity: .85;
+        }
+
+        .vermelha {
+            background: #ff0000;
+        }
+
+        .verde {
+            background: #00c52b;
+        }
+
+        .azul {
+            background: #003cff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main>
+
+        <h1>Sala Dobradiça Digital</h1>
+
+        <a class="botao vermelha"
+            href="https://saladobradica.github.io/SD-CAIXA-VERMELHA/">
+            Caixa Vermelha / Red Box
+        </a>
+
+        <a class="botao verde"
+            href="https://saladobradica.github.io/SD-CAIXA-VERDE/">
+            Caixa Verde / Green Box
+        </a>
+
+        <a class="botao azul"
+            href="https://saladobradica.github.io/SD-CAIXA-AZUL/">
+            Caixa Azul / Blue Box
+        </a>
+
+    </main>
+
+</body>
+
+</html>

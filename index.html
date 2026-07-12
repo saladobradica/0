@@ -11,29 +11,47 @@
 
   <title>Sala Dobradiça Digital</title>
 
-  <!-- Fonte condensada -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&display=swap"
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
   <style>
     :root {
+      --cor-fundo: rgb(32, 32, 32);
+
+      --branco: #ffffff;
+      --cinza-texto: #d0d0d0;
+
       /*
-        A cor deve ser exatamente igual à cor final
-        do fade da imagem bgmenu.png.
+        Cor aplicada a todas as bordas,
+        linhas e traços do site.
       */
-      --cor-fundo: rgb(37, 37, 37);
+      --cinza-tracos: rgb(126, 126, 126);
+
+      --preto: #000000;
 
       --vermelho: #ed1c24;
       --verde: #00d83a;
       --azul: #1946ff;
 
       --espaco-interno: clamp(16px, 3vw, 38px);
-      --distancia: clamp(20px, 3vw, 40px);
+
+      --altura-botao: 64px;
+
+      /*
+        Mesmo tamanho para o título
+        e para o texto final.
+      */
+      --tamanho-texto-menor: clamp(16px, 1.6vw, 24px);
     }
 
     * {
@@ -43,13 +61,23 @@
     }
 
     html {
+      min-height: 100%;
+
       background: var(--cor-fundo);
     }
 
     body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      width: 100%;
       min-height: 100vh;
+
+      overflow-x: hidden;
+
       background: var(--cor-fundo);
-      color: #ffffff;
+      color: var(--branco);
 
       font-family:
         "Barlow Condensed",
@@ -60,41 +88,58 @@
     }
 
     /*
-      CONTÊINER PRINCIPAL
-
-      No celular:
-      ocupa 95% da largura da tela.
-
-      No computador:
-      ocupa 50% da largura da tela.
+      PÁGINA PRINCIPAL
     */
     .pagina {
-      width: 95vw;
-      margin: 0 auto;
+      position: relative;
 
-      background-color: var(--cor-fundo);
-      background-image: url("img/bgmenu.png");
-      background-repeat: no-repeat;
-      background-position: top center;
-      background-size: 100% auto;
+      width: 95vw;
+      min-height: 100vh;
+
+      margin: 0;
 
       overflow: hidden;
+
+      background: var(--cor-fundo);
     }
 
     /*
-      Este espaço deixa a ilustração aparecer antes
-      do início dos textos e botões.
+      IMAGEM PRINCIPAL
 
-      O padding-top em porcentagem é calculado com
-      base na largura do contêiner e, por isso,
-      continua proporcional em qualquer tela.
+      A imagem e o conteúdo utilizam
+      exatamente o mesmo centro.
+    */
+    .imagem-fundo {
+      position: absolute;
+      top: 0;
+      left: 50%;
 
-      Aumente 74% para baixar o conteúdo.
-      Diminua 74% para subir o conteúdo.
+      z-index: 0;
+
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      margin: 0;
+
+      transform: translateX(-50%);
+
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /*
+      CONTEÚDO ACIMA DA IMAGEM
     */
     .conteudo {
+      position: relative;
+      z-index: 1;
+
+      width: 100%;
+
       padding:
-        74%
+        60%
         var(--espaco-interno)
         clamp(30px, 5vw, 70px);
     }
@@ -102,55 +147,234 @@
     .apresentacao {
       width: 100%;
       max-width: 780px;
+
       margin: 0 auto;
+
       text-align: center;
     }
 
+    /*
+      TÍTULO COM TRAÇOS LATERAIS
+    */
     h1 {
-      margin-bottom: clamp(14px, 2vw, 24px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      font-size: clamp(34px, 5vw, 70px);
-      font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: 0.025em;
-      text-transform: uppercase;
+      width: 100%;
+
+      margin-bottom: 10px;
+
+      font-size: var(--tamanho-texto-menor);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: 0.035em;
+
+      text-transform: none;
+      white-space: nowrap;
     }
 
-    .texto-apresentacao {
-      max-width: 690px;
-      margin: 0 auto;
+    h1::before,
+    h1::after {
+      content: "";
 
-      font-size: clamp(19px, 2vw, 29px);
-      font-weight: 400;
-      line-height: 1.25;
-      letter-spacing: 0.01em;
+      flex: 1;
+
+      min-width: 10px;
+      height: 1px;
+
+      background: var(--cinza-tracos);
+    }
+
+    h1::before {
+      margin-right: 10px;
+    }
+
+    h1::after {
+      margin-left: 10px;
     }
 
     /*
-      ÁREA DAS TRÊS CAIXAS
+      FITA PRETA DO TEXTO
+
+      As duas bordas laterais usam darkgray.
+    */
+    .faixa-apresentacao {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+      height: 44px;
+
+      overflow: hidden;
+
+      background: var(--preto);
+      color: var(--cinza-texto);
+
+      border-left: 1px solid var(--cinza-tracos);
+      border-right: 1px solid var(--cinza-tracos);
+    }
+
+    /*
+      TRILHO CONTÍNUO
+    */
+    .trilho-texto {
+      display: flex;
+      align-items: stretch;
+
+      width: max-content;
+      min-width: max-content;
+
+      background: var(--preto);
+
+      animation:
+        movimento-continuo-texto
+        30s
+        linear
+        infinite;
+
+      will-change: transform;
+    }
+
+    /*
+      Cada sequência contém três frases
+      e três separadores.
+    */
+    .sequencia-texto {
+      display: flex;
+      align-items: stretch;
+
+      flex: 0 0 auto;
+
+      margin: 0;
+      padding: 0;
+
+      background: var(--preto);
+    }
+
+    /*
+      TEXTO DA FITA
+    */
+    .grupo-texto {
+      display: flex;
+      align-items: center;
+
+      flex: 0 0 auto;
+
+      margin: 0;
+
+      padding:
+        7px
+        18px;
+
+      color: var(--cinza-texto);
+      background: var(--preto);
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.035em;
+
+      text-align: left;
+      white-space: nowrap;
+      word-spacing: normal;
+    }
+
+    /*
+      Caixa-Seção em negrito.
+    */
+    .grupo-texto strong {
+      color: inherit;
+
+      font-weight: 700;
+    }
+
+    /*
+      SEPARADOR TRIPLO ENTRE AS FRASES
+
+      Cada trecho de texto é separado por:
+      / vermelho, / verde e / azul.
+    */
+    .separador-ciclo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+
+      flex: 0 0 auto;
+
+      width: 48px;
+      padding: 0;
+
+      background: var(--preto);
+
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .barra-vermelha {
+      color: var(--vermelho);
+    }
+
+    .barra-verde {
+      color: var(--verde);
+    }
+
+    .barra-azul {
+      color: var(--azul);
+    }
+
+    /*
+      Duas sequências iguais:
+      deslocamento exato de uma sequência.
+    */
+    @keyframes movimento-continuo-texto {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /*
+      ÁREA DOS BOTÕES
     */
     .caixas {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 12px;
 
-      margin-top: clamp(32px, 5vw, 65px);
+      width: 100%;
+
+      margin-top: 12px;
     }
 
     /*
-      Cada botão é formado por:
+      BOTÃO COMPLETO
 
-      1. quadrado com seta;
-      2. retângulo colorido com o texto.
+      Cada botão recebe uma borda
+      darkgray de 1px no lado esquerdo.
     */
     .botao-caixa {
       display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: stretch;
 
+      grid-template-columns:
+        var(--altura-botao)
+        minmax(0, 1fr);
+
+      width: 100%;
+      height: var(--altura-botao);
       min-width: 0;
 
-      color: #ffffff;
+      border-left: 1px solid var(--cinza-tracos);
+
+      color: var(--branco);
       text-decoration: none;
 
       transition:
@@ -160,57 +384,187 @@
 
     .botao-caixa:hover {
       transform: translateY(-3px);
+
       filter: brightness(1.08);
     }
 
+    .botao-caixa:active {
+      transform: translateY(0);
+    }
+
+    /*
+      CONTORNO DE FOCO
+    */
     .botao-caixa:focus-visible,
     .botao-arquivo:focus-visible {
-      outline: 3px solid #ffffff;
+      outline: 3px solid var(--cinza-tracos);
       outline-offset: 5px;
     }
 
+    /*
+      QUADRADO DA SETA
+    */
     .seta {
-      width: clamp(62px, 9vw, 94px);
-      aspect-ratio: 1 / 1;
+      position: relative;
 
-      background-color: #ffffff;
+      width: var(--altura-botao);
+      height: var(--altura-botao);
+
+      overflow: hidden;
+
+      background: var(--preto);
+    }
+
+    /*
+      ESTEIRA ANIMADA DA SETA
+    */
+    .trilho-seta {
+      display: flex;
+
+      width: 200%;
+      height: 100%;
+
+      animation:
+        movimento-continuo-seta
+        2s
+        linear
+        infinite;
+
+      will-change: transform;
+    }
+
+    .quadro-seta {
+      flex: 0 0 50%;
+
+      width: 50%;
+      height: 100%;
+
+      background-color: var(--preto);
       background-image: url("img/seta.png");
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
+      background-size: 100% 100%;
     }
 
+    @keyframes movimento-continuo-seta {
+      from {
+        transform: translateX(-50%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    /*
+      PARTE COLORIDA DOS BOTÕES
+    */
     .nome-caixa {
+      position: relative;
+      isolation: isolate;
+
       display: flex;
       align-items: center;
       justify-content: center;
 
       min-width: 0;
-      padding: 12px 10px;
+      height: var(--altura-botao);
+
+      padding: 8px 10px;
+
+      overflow: hidden;
 
       text-align: center;
       text-transform: uppercase;
 
-      font-size: clamp(19px, 2vw, 27px);
+      font-size: clamp(18px, 2vw, 25px);
       font-weight: 600;
-      line-height: 1;
-      letter-spacing: 0.025em;
-    }
-
-    .botao-caixa.vermelha .nome-caixa {
-      background: var(--vermelho);
-    }
-
-    .botao-caixa.verde .nome-caixa {
-      background: var(--verde);
-    }
-
-    .botao-caixa.azul .nome-caixa {
-      background: var(--azul);
+      line-height: 0.95;
+      letter-spacing: 0.105em;
     }
 
     /*
-      TRAVESSÕES / DIVISORES
+      CAMADA COLORIDA ANIMADA
+    */
+    .nome-caixa::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      z-index: -1;
+
+      background: var(--cor-caixa);
+
+      animation:
+        brilho-botao
+        2s
+        ease-in-out
+        infinite;
+
+      will-change: opacity;
+    }
+
+    /*
+      BRILHO PRETO AMPLO E SUAVE
+    */
+    .rotulo-caixa {
+      position: relative;
+      z-index: 1;
+
+      color: var(--branco);
+
+      text-shadow:
+        0 0 6px rgba(0, 0, 0, 0.38),
+        0 0 12px rgba(0, 0, 0, 0.28),
+        0 0 22px rgba(0, 0, 0, 0.18),
+        0 0 34px rgba(0, 0, 0, 0.11),
+        0 0 52px rgba(0, 0, 0, 0.07);
+    }
+
+    /*
+      CORES DOS BOTÕES
+    */
+    .botao-caixa.vermelha {
+      --cor-caixa: var(--vermelho);
+    }
+
+    .botao-caixa.verde {
+      --cor-caixa: var(--verde);
+    }
+
+    .botao-caixa.azul {
+      --cor-caixa: var(--azul);
+    }
+
+    /*
+      ATRASO ENTRE AS PULSAÇÕES
+    */
+    .botao-caixa.vermelha .nome-caixa::before {
+      animation-delay: 0s;
+    }
+
+    .botao-caixa.verde .nome-caixa::before {
+      animation-delay: 0.5s;
+    }
+
+    .botao-caixa.azul .nome-caixa::before {
+      animation-delay: 1s;
+    }
+
+    @keyframes brilho-botao {
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.55;
+      }
+    }
+
+    /*
+      LINHAS DIVISÓRIAS DARKGRAY
     */
     .divisor {
       width: 100%;
@@ -221,15 +575,18 @@
         0;
 
       border: 0;
-      background: rgba(255, 255, 255, 0.95);
+
+      background: var(--cinza-tracos);
     }
 
     /*
-      ARQUIVO SALA DOBRADIÇA
+      BOTÃO OUTROS PROJETOS
     */
     .arquivo {
       display: flex;
       justify-content: center;
+
+      width: 100%;
     }
 
     .botao-arquivo {
@@ -238,29 +595,41 @@
       justify-content: center;
 
       width: 100%;
-      min-height: clamp(62px, 8vw, 94px);
-      padding: 14px 20px;
+      min-height: 64px;
 
-      border: 1px solid #ffffff;
+      padding: 12px 20px;
+
+      border: 1px solid var(--cinza-tracos);
       background: transparent;
 
-      color: #ffffff;
+      color: var(--branco);
       text-decoration: none;
       text-align: center;
       text-transform: uppercase;
+      white-space: nowrap;
 
-      font-size: clamp(20px, 2vw, 28px);
-      font-weight: 600;
+      font-family:
+        "Barlow Condensed",
+        "Arial Narrow",
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 400;
       line-height: 1;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.05em;
 
       transition:
         background-color 180ms ease,
-        color 180ms ease;
+        color 180ms ease,
+        border-color 180ms ease;
     }
 
     .botao-arquivo:hover {
-      background: #ffffff;
+      border-color: var(--cinza-texto);
+
+      background: var(--cinza-texto);
       color: var(--cor-fundo);
     }
 
@@ -281,72 +650,182 @@
       RODAPÉ
     */
     footer {
+       padding-top: 20px;
       padding-bottom: clamp(12px, 3vw, 30px);
+
       text-align: center;
     }
 
     footer p {
       max-width: 680px;
+
       margin: 0 auto;
 
-      font-size: clamp(14px, 1.3vw, 18px);
+      font-size: var(--tamanho-texto-menor);
       font-weight: 400;
       line-height: 1.35;
       letter-spacing: 0.015em;
     }
 
     /*
-      COMPUTADOR
-
-      A partir de 900 px de tela, o contêiner passa
-      a ocupar no máximo 50% da largura da janela.
+      COMPUTADORES
     */
     @media (min-width: 900px) {
+      :root {
+        --altura-botao: clamp(42px, 5.5vh, 54px);
+
+        --tamanho-texto-menor:
+          clamp(15px, 1.15vw, 20px);
+      }
+
       .pagina {
-        width: 50vw;
+        width: min(50vw, 1000px);
+      }
+
+      .imagem-fundo {
+        left: 50%;
+
+        width: 100%;
+
+        transform: translateX(-50%);
+      }
+
+      .conteudo {
+        padding:
+          68vh
+          var(--espaco-interno)
+          clamp(30px, 5vw, 70px);
+      }
+
+      .apresentacao {
+        display: grid;
+
+        width: 100%;
+        max-width: none;
+        height: auto;
+
+        margin: 0;
+
+        grid-template-rows:
+          auto
+          auto
+          auto;
+
+        align-content: start;
+
+        row-gap: 0;
+      }
+
+      h1 {
+        margin-bottom: 9px;
       }
 
       /*
-        No desktop, as três caixas ficam lado a lado.
+        FITA NO COMPUTADOR
+      */
+      .faixa-apresentacao {
+        width: 100%;
+        height: 32px;
+      }
+
+      .grupo-texto {
+        padding:
+          7px
+          18px;
+
+        font-size: clamp(13px, 0.9vw, 16px);
+        letter-spacing: 0.04em;
+      }
+
+      .separador-ciclo {
+        width: 46px;
+
+        font-size: clamp(15px, 1vw, 18px);
+      }
+
+      /*
+        BOTÕES NA HORIZONTAL
       */
       .caixas {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: clamp(10px, 1vw, 18px);
-      }
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
 
-      /*
-        Como os três botões precisam caber juntos,
-        o quadrado da seta fica proporcionalmente menor.
-      */
-      .seta {
-        width: clamp(48px, 4vw, 74px);
+        gap: clamp(7px, 0.8vw, 12px);
+
+        width: 100%;
+
+        margin-top: 12px;
       }
 
       .nome-caixa {
-        padding: 9px 6px;
-        font-size: clamp(16px, 1.35vw, 23px);
+        padding: 5px 4px;
+
+        font-size: clamp(13px, 1vw, 17px);
+        line-height: 0.95;
+        letter-spacing: 0.1em;
       }
 
-      /*
-        O botão Arquivo fica com a mesma largura
-        aproximada de uma das três caixas.
-      */
+      .divisor {
+        margin:
+          clamp(18px, 2.5vh, 26px)
+          0;
+      }
+
       .botao-arquivo {
-        width: calc((100% - 2 * clamp(10px, 1vw, 18px)) / 3);
-        min-width: 210px;
+        width: auto;
+        min-width: 290px;
+        min-height: var(--altura-botao);
+
+        padding:
+          8px
+          clamp(20px, 2vw, 34px);
+
+        font-size: clamp(15px, 1.1vw, 20px);
+        font-weight: 400;
       }
     }
 
     /*
-      TELAS MUITO GRANDES
-
-      Impede que tudo fique exageradamente largo.
-      Retire este bloco caso queira exatamente 50vw
-      mesmo em monitores muito grandes.
+      COMPUTADORES COM POUCA ALTURA
     */
-    @media (min-width: 1800px) {
-      .pagina {
-        width: min(50vw, 1000px);
+    @media (min-width: 900px) and (max-height: 720px) {
+      :root {
+        --altura-botao: 42px;
+        --tamanho-texto-menor: 14px;
+      }
+
+      h1 {
+        margin-bottom: 7px;
+      }
+
+      .faixa-apresentacao {
+        height: 29px;
+      }
+
+      .grupo-texto {
+        padding:
+          6px
+          16px;
+
+        font-size: 13px;
+      }
+
+      .separador-ciclo {
+        width: 42px;
+
+        font-size: 15px;
+      }
+
+      .caixas {
+        margin-top: 10px;
+      }
+
+      .nome-caixa {
+        font-size: 13px;
+      }
+
+      .divisor {
+        margin: 16px 0;
       }
     }
 
@@ -354,20 +833,70 @@
       CELULARES PEQUENOS
     */
     @media (max-width: 420px) {
+      :root {
+        --altura-botao: 58px;
+        --tamanho-texto-menor: 16px;
+      }
+
       .pagina {
         width: 95vw;
       }
 
-      .conteudo {
-        padding-top: 76%;
+      .imagem-fundo {
+        left: 50%;
+
+        width: 100%;
+
+        transform: translateX(-50%);
       }
 
-      .seta {
-        width: 64px;
+      .conteudo {
+        padding-top: 60%;
+      }
+
+      h1::before {
+        margin-right: 8px;
+      }
+
+      h1::after {
+        margin-left: 8px;
+      }
+
+      .faixa-apresentacao {
+        height: 40px;
+      }
+
+      .grupo-texto {
+        padding:
+          7px
+          16px;
+
+        font-size: 15px;
+        letter-spacing: 0.035em;
+      }
+
+      .separador-ciclo {
+        width: 44px;
+
+        font-size: 17px;
       }
 
       .nome-caixa {
-        font-size: 19px;
+        font-size: 17px;
+        letter-spacing: 0.095em;
+      }
+
+      .botao-arquivo {
+        width: 100%;
+
+        padding:
+          10px
+          12px;
+
+        font-size: clamp(16px, 5vw, 20px);
+        font-weight: 400;
+
+        white-space: normal;
       }
 
       .logos {
@@ -376,9 +905,24 @@
     }
 
     /*
-      Pessoas que preferem menos movimento
+      ACESSIBILIDADE
     */
     @media (prefers-reduced-motion: reduce) {
+      .nome-caixa::before,
+      .trilho-seta,
+      .trilho-texto {
+        animation: none;
+      }
+
+      .nome-caixa::before {
+        opacity: 1;
+      }
+
+      .trilho-seta,
+      .trilho-texto {
+        transform: translateX(0);
+      }
+
       .botao-caixa,
       .botao-arquivo {
         transition: none;
@@ -391,6 +935,13 @@
 
   <main class="pagina">
 
+    <img
+      class="imagem-fundo"
+      src="img/bgmenu.png"
+      alt=""
+      aria-hidden="true"
+    >
+
     <div class="conteudo">
 
       <section
@@ -399,60 +950,210 @@
       >
 
         <h1 id="titulo-principal">
-          Sala Dobradiça Digital
+          Bem-vindx à Sala Dobradiça Digital!
         </h1>
 
-        <p class="texto-apresentacao">
-          Esta é a Sala Dobradiça Digital, um projeto dedicado
-          a experiências imersivas em realidade virtual.
-          Selecione abaixo uma Caixa-Seção para começar sua imersão.
-        </p>
+        <div
+          class="faixa-apresentacao"
+          aria-label="Selecione abaixo uma Caixa-Seção para começar sua imersão."
+        >
+
+          <div class="trilho-texto">
+
+            <!-- PRIMEIRA SEQUÊNCIA -->
+            <div class="sequencia-texto">
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+            </div>
+
+            <!-- SEGUNDA SEQUÊNCIA IDÊNTICA -->
+            <div
+              class="sequencia-texto"
+              aria-hidden="true"
+            >
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+              <span class="grupo-texto">
+                Selecione abaixo uma&nbsp;
+                <strong>Caixa-Seção</strong>&nbsp;
+                para começar sua imersão.
+              </span>
+
+              <span
+                class="separador-ciclo"
+                aria-hidden="true"
+              >
+                <span class="barra-vermelha">/</span>
+                <span class="barra-verde">/</span>
+                <span class="barra-azul">/</span>
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
 
         <nav
           class="caixas"
           aria-label="Caixas-Seções da Sala Dobradiça Digital"
         >
 
+          <!-- Caixa Vermelha -->
           <a
             class="botao-caixa vermelha"
-            href="/SD-CAIXA-VERMELHA/"
+            href="https://saladobradica.github.io/SD-CAIXA-VERMELHA/"
           >
+
             <span
               class="seta"
               aria-hidden="true"
-            ></span>
+            >
+
+              <span class="trilho-seta">
+                <span class="quadro-seta"></span>
+                <span class="quadro-seta"></span>
+              </span>
+
+            </span>
 
             <span class="nome-caixa">
-              Caixa-Seção Vermelha
+
+              <span class="rotulo-caixa">
+                Caixa-Seção Vermelha
+              </span>
+
             </span>
+
           </a>
 
+          <!-- Caixa Verde -->
           <a
             class="botao-caixa verde"
-            href="/SD-CAIXA-VERDE/"
+            href="https://saladobradica.github.io/SD-CAIXA-VERDE/"
           >
+
             <span
               class="seta"
               aria-hidden="true"
-            ></span>
+            >
+
+              <span class="trilho-seta">
+                <span class="quadro-seta"></span>
+                <span class="quadro-seta"></span>
+              </span>
+
+            </span>
 
             <span class="nome-caixa">
-              Caixa-Seção Verde
+
+              <span class="rotulo-caixa">
+                Caixa-Seção Verde
+              </span>
+
             </span>
+
           </a>
 
+          <!-- Caixa Azul -->
           <a
             class="botao-caixa azul"
-            href="/SD-CAIXA-AZUL/"
+            href="https://saladobradica.github.io/SD-CAIXA-AZUL/"
           >
+
             <span
               class="seta"
               aria-hidden="true"
-            ></span>
+            >
+
+              <span class="trilho-seta">
+                <span class="quadro-seta"></span>
+                <span class="quadro-seta"></span>
+              </span>
+
+            </span>
 
             <span class="nome-caixa">
-              Caixa-Seção Azul
+
+              <span class="rotulo-caixa">
+                Caixa-Seção Azul
+              </span>
+
             </span>
+
           </a>
 
         </nav>
@@ -466,8 +1167,10 @@
         <a
           class="botao-arquivo"
           href="https://www.saladobradica.art.br/p/a-sala-dobradica-constituida-por-um_13.html"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Arquivo Sala Dobradiça
+          Outros projetos da Sala Dobradiça
         </a>
 
       </section>
@@ -489,8 +1192,8 @@
       <footer>
 
         <p>
-          Desenvolvido pelo artista visual e professor
-          (UFRGS/IA/DAV) Elias Maroso, 2026.
+          Interfaces interativas desenvolvidas pelo artista visual e professor
+          (UFRGS/IA/DAV) Elias Maroso. Julho de 2026.
         </p>
 
       </footer>
@@ -500,4 +1203,5 @@
   </main>
 
 </body>
+
 </html>

@@ -2,100 +2,502 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-    <title>Sala Dobradiça Digital</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <title>Sala Dobradiça Digital</title>
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: Helvetica, Arial, sans-serif;
-            min-height: 100vh;
+  <!-- Fonte condensada -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-        main {
-            width: 90%;
-            max-width: 1100px;
-            text-align: center;
-        }
+  <style>
+    :root {
+      /*
+        A cor deve ser exatamente igual à cor final
+        do fade da imagem bgmenu.png.
+      */
+      --cor-fundo: rgb(37, 37, 37);
 
-        h1 {
-            font-size: clamp(40px, 6vw, 72px);
-            font-weight: 700;
-            margin-bottom: 60px;
-        }
+      --vermelho: #ed1c24;
+      --verde: #00d83a;
+      --azul: #1946ff;
 
-        .botao {
-            display: block;
+      --espaco-interno: clamp(16px, 3vw, 38px);
+      --distancia: clamp(20px, 3vw, 40px);
+    }
 
-            width: 100%;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-            padding: 22px 10px;
-            margin: 24px 0;
+    html {
+      background: var(--cor-fundo);
+    }
 
-            color: #fff;
-            text-decoration: none;
+    body {
+      min-height: 100vh;
+      background: var(--cor-fundo);
+      color: #ffffff;
 
-            font-size: clamp(22px, 2.4vw, 34px);
-            font-weight: bold;
+      font-family:
+        "Barlow Condensed",
+        "Arial Narrow",
+        Helvetica,
+        Arial,
+        sans-serif;
+    }
 
-            transition: opacity .2s ease;
-        }
+    /*
+      CONTÊINER PRINCIPAL
 
-        .botao:hover {
-            opacity: .85;
-        }
+      No celular:
+      ocupa 95% da largura da tela.
 
-        .vermelha {
-            background: #ff0000;
-        }
+      No computador:
+      ocupa 50% da largura da tela.
+    */
+    .pagina {
+      width: 95vw;
+      margin: 0 auto;
 
-        .verde {
-            background: #00c52b;
-        }
+      background-color: var(--cor-fundo);
+      background-image: url("img/bgmenu.png");
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: 100% auto;
 
-        .azul {
-            background: #003cff;
-        }
-    </style>
+      overflow: hidden;
+    }
 
+    /*
+      Este espaço deixa a ilustração aparecer antes
+      do início dos textos e botões.
+
+      O padding-top em porcentagem é calculado com
+      base na largura do contêiner e, por isso,
+      continua proporcional em qualquer tela.
+
+      Aumente 74% para baixar o conteúdo.
+      Diminua 74% para subir o conteúdo.
+    */
+    .conteudo {
+      padding:
+        74%
+        var(--espaco-interno)
+        clamp(30px, 5vw, 70px);
+    }
+
+    .apresentacao {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: clamp(14px, 2vw, 24px);
+
+      font-size: clamp(34px, 5vw, 70px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: 0.025em;
+      text-transform: uppercase;
+    }
+
+    .texto-apresentacao {
+      max-width: 690px;
+      margin: 0 auto;
+
+      font-size: clamp(19px, 2vw, 29px);
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    /*
+      ÁREA DAS TRÊS CAIXAS
+    */
+    .caixas {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+
+      margin-top: clamp(32px, 5vw, 65px);
+    }
+
+    /*
+      Cada botão é formado por:
+
+      1. quadrado com seta;
+      2. retângulo colorido com o texto.
+    */
+    .botao-caixa {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: stretch;
+
+      min-width: 0;
+
+      color: #ffffff;
+      text-decoration: none;
+
+      transition:
+        transform 180ms ease,
+        filter 180ms ease;
+    }
+
+    .botao-caixa:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.08);
+    }
+
+    .botao-caixa:focus-visible,
+    .botao-arquivo:focus-visible {
+      outline: 3px solid #ffffff;
+      outline-offset: 5px;
+    }
+
+    .seta {
+      width: clamp(62px, 9vw, 94px);
+      aspect-ratio: 1 / 1;
+
+      background-color: #ffffff;
+      background-image: url("img/seta.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .nome-caixa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 0;
+      padding: 12px 10px;
+
+      text-align: center;
+      text-transform: uppercase;
+
+      font-size: clamp(19px, 2vw, 27px);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.025em;
+    }
+
+    .botao-caixa.vermelha .nome-caixa {
+      background: var(--vermelho);
+    }
+
+    .botao-caixa.verde .nome-caixa {
+      background: var(--verde);
+    }
+
+    .botao-caixa.azul .nome-caixa {
+      background: var(--azul);
+    }
+
+    /*
+      TRAVESSÕES / DIVISORES
+    */
+    .divisor {
+      width: 100%;
+      height: 1px;
+
+      margin:
+        clamp(34px, 5vw, 64px)
+        0;
+
+      border: 0;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    /*
+      ARQUIVO SALA DOBRADIÇA
+    */
+    .arquivo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .botao-arquivo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      min-height: clamp(62px, 8vw, 94px);
+      padding: 14px 20px;
+
+      border: 1px solid #ffffff;
+      background: transparent;
+
+      color: #ffffff;
+      text-decoration: none;
+      text-align: center;
+      text-transform: uppercase;
+
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.025em;
+
+      transition:
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+
+    .botao-arquivo:hover {
+      background: #ffffff;
+      color: var(--cor-fundo);
+    }
+
+    /*
+      LOGOS
+    */
+    .logos {
+      display: block;
+
+      width: 70%;
+      max-width: 700px;
+      height: auto;
+
+      margin: 0 auto;
+    }
+
+    /*
+      RODAPÉ
+    */
+    footer {
+      padding-bottom: clamp(12px, 3vw, 30px);
+      text-align: center;
+    }
+
+    footer p {
+      max-width: 680px;
+      margin: 0 auto;
+
+      font-size: clamp(14px, 1.3vw, 18px);
+      font-weight: 400;
+      line-height: 1.35;
+      letter-spacing: 0.015em;
+    }
+
+    /*
+      COMPUTADOR
+
+      A partir de 900 px de tela, o contêiner passa
+      a ocupar no máximo 50% da largura da janela.
+    */
+    @media (min-width: 900px) {
+      .pagina {
+        width: 50vw;
+      }
+
+      /*
+        No desktop, as três caixas ficam lado a lado.
+      */
+      .caixas {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(10px, 1vw, 18px);
+      }
+
+      /*
+        Como os três botões precisam caber juntos,
+        o quadrado da seta fica proporcionalmente menor.
+      */
+      .seta {
+        width: clamp(48px, 4vw, 74px);
+      }
+
+      .nome-caixa {
+        padding: 9px 6px;
+        font-size: clamp(16px, 1.35vw, 23px);
+      }
+
+      /*
+        O botão Arquivo fica com a mesma largura
+        aproximada de uma das três caixas.
+      */
+      .botao-arquivo {
+        width: calc((100% - 2 * clamp(10px, 1vw, 18px)) / 3);
+        min-width: 210px;
+      }
+    }
+
+    /*
+      TELAS MUITO GRANDES
+
+      Impede que tudo fique exageradamente largo.
+      Retire este bloco caso queira exatamente 50vw
+      mesmo em monitores muito grandes.
+    */
+    @media (min-width: 1800px) {
+      .pagina {
+        width: min(50vw, 1000px);
+      }
+    }
+
+    /*
+      CELULARES PEQUENOS
+    */
+    @media (max-width: 420px) {
+      .pagina {
+        width: 95vw;
+      }
+
+      .conteudo {
+        padding-top: 76%;
+      }
+
+      .seta {
+        width: 64px;
+      }
+
+      .nome-caixa {
+        font-size: 19px;
+      }
+
+      .logos {
+        width: 82%;
+      }
+    }
+
+    /*
+      Pessoas que preferem menos movimento
+    */
+    @media (prefers-reduced-motion: reduce) {
+      .botao-caixa,
+      .botao-arquivo {
+        transition: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <main>
+  <main class="pagina">
 
-        <h1>Sala Dobradiça Digital</h1>
+    <div class="conteudo">
 
-        <a class="botao vermelha"
-            href="https://saladobradica.github.io/SD-CAIXA-VERMELHA/">
-            Caixa Vermelha / Red Box
+      <section
+        class="apresentacao"
+        aria-labelledby="titulo-principal"
+      >
+
+        <h1 id="titulo-principal">
+          Sala Dobradiça Digital
+        </h1>
+
+        <p class="texto-apresentacao">
+          Esta é a Sala Dobradiça Digital, um projeto dedicado
+          a experiências imersivas em realidade virtual.
+          Selecione abaixo uma Caixa-Seção para começar sua imersão.
+        </p>
+
+        <nav
+          class="caixas"
+          aria-label="Caixas-Seções da Sala Dobradiça Digital"
+        >
+
+          <a
+            class="botao-caixa vermelha"
+            href="/SD-CAIXA-VERMELHA/"
+          >
+            <span
+              class="seta"
+              aria-hidden="true"
+            ></span>
+
+            <span class="nome-caixa">
+              Caixa-Seção Vermelha
+            </span>
+          </a>
+
+          <a
+            class="botao-caixa verde"
+            href="/SD-CAIXA-VERDE/"
+          >
+            <span
+              class="seta"
+              aria-hidden="true"
+            ></span>
+
+            <span class="nome-caixa">
+              Caixa-Seção Verde
+            </span>
+          </a>
+
+          <a
+            class="botao-caixa azul"
+            href="/SD-CAIXA-AZUL/"
+          >
+            <span
+              class="seta"
+              aria-hidden="true"
+            ></span>
+
+            <span class="nome-caixa">
+              Caixa-Seção Azul
+            </span>
+          </a>
+
+        </nav>
+
+      </section>
+
+      <hr class="divisor">
+
+      <section class="arquivo">
+
+        <a
+          class="botao-arquivo"
+          href="https://www.saladobradica.art.br/p/a-sala-dobradica-constituida-por-um_13.html"
+        >
+          Arquivo Sala Dobradiça
         </a>
 
-        <a class="botao verde"
-            href="https://saladobradica.github.io/SD-CAIXA-VERDE/">
-            Caixa Verde / Green Box
-        </a>
+      </section>
 
-        <a class="botao azul"
-            href="https://saladobradica.github.io/SD-CAIXA-AZUL/">
-            Caixa Azul / Blue Box
-        </a>
+      <hr class="divisor">
 
-    </main>
+      <section aria-label="Realização e apoio">
+
+        <img
+          class="logos"
+          src="img/logos.png"
+          alt="Logos de realização e apoio"
+        >
+
+      </section>
+
+      <hr class="divisor">
+
+      <footer>
+
+        <p>
+          Desenvolvido pelo artista visual e professor
+          (UFRGS/IA/DAV) Elias Maroso, 2026.
+        </p>
+
+      </footer>
+
+    </div>
+
+  </main>
 
 </body>
-
 </html>
